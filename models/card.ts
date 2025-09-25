@@ -1,9 +1,11 @@
 import type { Suit, Value } from "../logic/cards";
 
-type CardColor = "Red" | "Black";
+export type CardColor = "Red" | "Black";
 
 export interface Card {
   suit: Suit;
   value: Value;
   color: CardColor;
 }
+
+export type DeckState = { deck: Card[] };

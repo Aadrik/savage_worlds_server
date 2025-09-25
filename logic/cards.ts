@@ -1,4 +1,4 @@
-import type { Card } from "../models/card";
+import type { Card, CardColor } from "../models/card";
 
 export const suits = [
   "Clubs",
@@ -7,6 +7,7 @@ export const suits = [
   "Spades",
   "Joker",
 ] as const;
+
 export const values = [
   "2",
   "3",
@@ -24,6 +25,31 @@ export const values = [
   "Joker",
 ] as const;
 
+const suitValues = {
+  Clubs: 1,
+  Diamonds: 2,
+  Hearts: 3,
+  Spades: 4,
+  Joker: 5,
+};
+
+const cardValues = {
+  "2": 2,
+  "3": 3,
+  "4": 4,
+  "5": 5,
+  "6": 6,
+  "7": 7,
+  "8": 8,
+  "9": 9,
+  "10": 10,
+  Jack: 11,
+  Queen: 12,
+  King: 13,
+  Ace: 14,
+  Joker: 15,
+};
+
 export type Suit = (typeof suits)[number];
 export type Value = (typeof values)[number];
 
@@ -32,7 +58,8 @@ export function generateDeck(includeJokers = true): Card[] {
   for (const suit of suits) {
     // Make a card for each suit except Jokers
     if (suit !== "Joker") {
-      const color = suit == "Hearts" || suit == "Diamonds" ? "Red" : "Black";
+      const color: CardColor =
+        suit == "Hearts" || suit == "Diamonds" ? "Red" : "Black";
       for (const value of values) {
         // Make a card for each value except Jokers
         if (value !== "Joker") {
@@ -61,4 +88,38 @@ export function shuffleDeck(deck: Card[]): Card[] {
     ];
   }
   return shuffledDeck;
+}
+
+export function dealCard(deck: Card[]): Card {
+  const card = deck.pop();
+  if (!card) {
+    throw new Error("Deck is empty");
+  }
+  return card;
+}
+
+export function createCard(suit: Suit, value: Value): Card {
+  let color: CardColor =
+    suit == "Hearts" || suit == "Diamonds" ? "Red" : "Black";
+  return { suit, value, color };
+}
+
+// Return true if first argument is greater than second argument
+export function suitGreaterThan(a: Card, b: Card): boolean {
+  let aSuitValue = suitValues[a.suit];
+  let bSuitValue = suitValues[b.suit];
+  return aSuitValue > bSuitValue;
+}
+
+export function valueGreaterThan(a: Card, b: Card): boolean {
+  let aValue = cardValues[a.value];
+  let bValue = cardValues[b.value];
+  return aValue > bValue;
+}
+
+// Return true if first argument is greater than second argument
+export function cardGreaterThan(a: Card, b: Card): boolean {
+  return cardValues[a.value] == cardValues[b.value]
+    ? suitGreaterThan(a, b)
+    : valueGreaterThan(a, b);
 }
