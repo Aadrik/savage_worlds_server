@@ -123,3 +123,15 @@ export function cardGreaterThan(a: Card, b: Card): boolean {
     ? suitGreaterThan(a, b)
     : valueGreaterThan(a, b);
 }
+
+// Array sort function. Decending order
+export function sortCards(a: Card, b: Card): number {
+  // If a is greater than b
+  if (cardGreaterThan(a, b)) {
+    return -1;
+
+    // If b is greater than a
+  } else {
+    return 1;
+  }
+}

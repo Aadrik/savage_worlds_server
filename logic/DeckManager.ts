@@ -1,5 +1,5 @@
 import type { DeckState } from "../models/card.ts";
-import { generateDeck, dealCard, shuffleDeck } from "./cards.js";
+import { generateDeck, dealCard, shuffleDeck } from "./cards";
 
 function ensureCardAvailable(state: DeckState) {
   if (state.deck.length > 0) {
@@ -9,7 +9,7 @@ function ensureCardAvailable(state: DeckState) {
   }
 }
 
-export function deckManager() {
+export function DeckManager() {
   let state: DeckState = {
     deck: [],
   };
