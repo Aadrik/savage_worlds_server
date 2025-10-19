@@ -5,6 +5,8 @@ import {
   suitGreaterThan,
   cardGreaterThan,
   dealCard,
+  filterDeck,
+  equalsSuitFilter,
 } from "../logic/cards";
 import { suits, values } from "../logic/cards";
 
@@ -131,3 +133,18 @@ describe("cardGreaterThan", () => {
     expect(cardGreaterThan(card1, card2)).toBe(true);
   });
 });
+
+describe("filterCard", () => {
+  it("should remove cards of a certain suit", () => {
+    let deck = generateDeck(false);
+    let heart = createCard("Hearts", "Queen");
+    expect(filterDeck(equalsSuitFilter("Hearts"), deck)).not.toContain(heart);
+  });
+});
+
+// describe("filterCard", () => {
+//   it("should remove cards with a certain value", () => {
+//     let deck = generateDeck(false);
+//     expect(filterDeck(heartFilter, deck)).not.toContain(heart);
+//   });
+// });
